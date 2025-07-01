@@ -5,41 +5,44 @@ let sound;
 
 /*** ↓↓① ここで音楽を選択しよう↓↓ ***/
 function preload() {
-  sound = loadSound("sample.mp3");
+  sound = loadSound('music3.mp3');
 }
 
 /*** ↓↓ここは触らない↓↓ ***/
 function setup() {
   createCanvas(400, 400);
   ws_setup();
-  sound.play();
+  // sound.play();
   frameRate(FPS);
 }
 
 /*** ↓↓② ここを書き換えてみよう↓↓ ***/
 function draw() {
-  //
-  //
   /* 1. 開始0秒から10秒まで実行↓↓ */
-  //
-  if (frameCount < FPS * 10) {
+  if (frameCount < FPS * 15) {
     // 1-1. キャンバスを塗りつぶす
-    background("white");
+    background('white');
 
     // 1-2. テンプレートの関数を呼び出す
-    ws_rebound({}); // リバウンド
-    // ws_pulse({}); // パルス
-    // ws_whirl({}); // ウィール
+    // ws_rebound({ num: 50, opacity: [0.5, 1] }); // リバウンド
+    /*
+    ws_pulse({
+      cols: [color('navy'), color('orange')],
+      R: 0.5
+    }); // パルス
+    */
+    ws_whirl({ cols: [color('navy')], opacity: [0.5, 0.9] }); // ウィール
+
     // ws_spiral({}); // スパイラル
-    ws_grid({}); // グリッド
+    // ws_grid({}); // グリッド
     // ws_line({}); // ライン
-  } else if (frameCount == FPS * 10) {
+  } else if (frameCount == FPS * 15) {
     // 1-3. 上で使ったテンプレートをリセット
-    ws_reset("rebound");
+    ws_reset('rebound');
     // ws_reset("pulse");
     // ws_reset("whirl");
     // ws_reset("spiral");
-    ws_reset("grid");
+    ws_reset('grid');
     // ws_reset("line");
   }
   //
@@ -48,25 +51,48 @@ function draw() {
   //
   else if (frameCount < FPS * 20) {
     // 2-1. キャンバスを塗りつぶす
-    background("navy");
+    background('navy');
 
     // 2-2. テンプレートの関数を呼び出す
     // ws_rebound({});
     ws_pulse({
       num: 30,
       size: [5, 20],
-      fade: "opacity",
+      fade: 'opacity'
     });
     // ws_whirl({});
-    ws_spiral({ direction: ["inf", "left"], diameter: 150 });
+    ws_spiral({ direction: ['inf', 'left'], diameter: 150 });
     // ws_grid({});
     // ws_line({});
   } else if (frameCount == FPS * 20) {
     // 2-3. 上で使ったテンプレートをリセット
     // ws_reset("rebound");
-    ws_reset("pulse");
+    ws_reset('pulse');
     // ws_reset("whirl");
-    ws_reset("spiral");
+    ws_reset('spiral');
+    // ws_reset("grid");
+    // ws_reset("line");
+  } else if (frameCount < FPS * 20) {
+    // 2-1. キャンバスを塗りつぶす
+    background('navy');
+
+    // 2-2. テンプレートの関数を呼び出す
+    // ws_rebound({});
+    ws_pulse({
+      num: 30,
+      size: [5, 20],
+      fade: 'opacity'
+    });
+    // ws_whirl({});
+    ws_spiral({ direction: ['inf', 'left'], diameter: 150 });
+    // ws_grid({});
+    // ws_line({});
+  } else if (frameCount == FPS * 20) {
+    // 2-3. 上で使ったテンプレートをリセット
+    // ws_reset("rebound");
+    ws_reset('pulse');
+    // ws_reset("whirl");
+    ws_reset('spiral');
     // ws_reset("grid");
     // ws_reset("line");
   }
@@ -76,17 +102,17 @@ function draw() {
   //
   else if (frameCount < FPS * END_TIME) {
     // 3-1. キャンバスを塗りつぶす
-    background("gold");
+    background('gold');
 
     // 3-2. テンプレートの関数を呼び出す
     // ws_rebound({});
     // ws_pulse({});
-    ws_whirl({ opacity: [0.5, 0.9], fluctuate: "off" });
+    ws_whirl({ opacity: [0.5, 0.9], fluctuate: 'off' });
     // ws_spiral({});
     // ws_grid({});
     ws_line({
       angle: 180,
-      cols: [color("skyblue"), color("yellow")],
+      cols: [color('skyblue'), color('yellow')]
     });
   }
 

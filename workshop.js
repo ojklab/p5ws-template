@@ -11,10 +11,10 @@
  * size   : 図形の1辺あるいは直径の長さ
  * R      : 角丸の比率（0から1の範囲／0が四角、1が円）
  * speed  : 図形の変化速度
- * colors : 色セット [color('色名'), color(R,G,B), ...]
+ * cols : 色セット [color('色名'), color(R,G,B), ...]
  * opacity: 不透明度（0から1の範囲／0が透明、1が不透明）
  * 注） パラメータによっては [A, B] の形式で2つの値を与えられる（詳細は各テンプレートのコードの先頭に記載）
- * 注） colorsで単色を指定するときも [color(R,G,B)] と配列の形式にする
+ * 注） colsで単色を指定するときも [color('色名')] と配列の形式にする
  */
 
 /* 各テンプレートのレイヤー */
@@ -53,7 +53,7 @@ const store = {
   whirl: [],
   spiral: [],
   grid: [],
-  line: [],
+  line: []
 };
 
 /* ユーティリティ */
@@ -74,7 +74,7 @@ p5.prototype.ws_rebound = (arg) => {
       color(145, 168, 235),
       color(139, 55, 191),
       color(252, 249, 179),
-      color(255, 105, 180),
+      color(255, 105, 180)
     ];
 
     for (let i = 0; i < num; i += 1) {
@@ -113,7 +113,7 @@ p5.prototype.ws_rebound = (arg) => {
         R: R,
         col: col,
         vx: rand01() * vel,
-        vy: rand01() * vel,
+        vy: rand01() * vel
       });
     }
   }
@@ -160,7 +160,7 @@ p5.prototype.ws_pulse = (arg) => {
       color(145, 168, 235),
       color(139, 55, 191),
       color(252, 249, 179),
-      color(255, 105, 180),
+      color(255, 105, 180)
     ];
 
     for (let i = 0; i < num; i += 1) {
@@ -204,7 +204,7 @@ p5.prototype.ws_pulse = (arg) => {
         y: random(size / 2, height - size / 2),
         R: R,
         col: col,
-        vel: vel,
+        vel: vel
       });
     }
   }
@@ -247,7 +247,7 @@ p5.prototype.ws_pulse = (arg) => {
 };
 
 /*** 回転（ウィール）：複数の図形が円を描いて回転する ***/
-/* 引数： num, size, R, speed, colors, opacity, direction, fluctuate, diameter */
+/* 引数： num, size, R, speed, cols, opacity, direction, fluctuate, diameter */
 // fluctuate（収縮・膨張を繰り返すか否か）: on, off (既定値: on)
 // direcrion（収縮／膨張方向）: 負の値, 正の値 (既定値: -1)
 // diameter（回転直径）: width以下の数値
@@ -258,14 +258,14 @@ p5.prototype.ws_whirl = (arg) => {
   // 初期設定
   if (store.whirl.length === 0) {
     const num = arg.num || 6;
-    const cols = arg.colors || [
+    const cols = arg.cols || [
       color(252, 121, 121),
       color(245, 158, 66),
       color(126, 224, 201),
       color(145, 168, 235),
       color(139, 55, 191),
       color(252, 249, 179),
-      color(255, 105, 180),
+      color(255, 105, 180)
     ];
 
     for (let i = 0; i < num; i += 1) {
@@ -319,7 +319,7 @@ p5.prototype.ws_whirl = (arg) => {
         fluctuate: arg.fluctuate == 'off' ? false : true,
         radius: v_dir > 0 ? 0 : diameter / 2,
         diameter: diameter,
-        step: 0,
+        step: 0
       });
     }
   }
@@ -343,10 +343,7 @@ p5.prototype.ws_whirl = (arg) => {
     s.angle += s.h_dir * s.h_vel;
     s.step += 1;
 
-    if (
-      (s.v_dir < 0 && s.radius <= WHIRL_MINRAD) ||
-      (s.v_dir > 0 && s.radius >= s.diameter / 2)
-    ) {
+    if ((s.v_dir < 0 && s.radius <= WHIRL_MINRAD) || (s.v_dir > 0 && s.radius >= s.diameter / 2)) {
       if (s.fluctuate) {
         s.v_dir *= -1;
       } else {
@@ -361,7 +358,7 @@ p5.prototype.ws_whirl = (arg) => {
 };
 
 /*** スパイラル：図形（1個）が円を描きながら中心にいく ***/
-/* 引数： size, R, speed, colors, opacity, direction, diameter, interval */
+/* 引数： size, R, speed, cols, opacity, direction, diameter, interval */
 // direction（収縮／膨張方向）: 負の値, 正の値 (既定値: -1)
 // diameter（回転直径）: width以下の数値
 // interval（色変化間隔）: 秒 （既定値： 色変化なし）
@@ -369,14 +366,14 @@ p5.prototype.ws_whirl = (arg) => {
 // 注） speedが配列の場合は、乱数ではなく、[回転速度, 収縮／膨張速度]になる
 // 注） directionが配列の場合は、乱数ではなく、[収縮／膨張方向, 左回り／右回り]になる
 p5.prototype.ws_spiral = (arg) => {
-  const cols = arg.colors || [
+  const cols = arg.cols || [
     color(252, 121, 121),
     color(245, 158, 66),
     color(126, 224, 201),
     color(145, 168, 235),
     color(139, 55, 191),
     color(252, 249, 179),
-    color(255, 105, 180),
+    color(255, 105, 180)
   ];
   const fps = frameRate();
 
@@ -416,7 +413,7 @@ p5.prototype.ws_spiral = (arg) => {
       radius: v_dir > 0 ? 0 : diameter / 2,
       diameter: diameter,
       angle: random(0, 360),
-      int: round(arg.interval * fps) ?? 0,
+      int: round(arg.interval * fps) ?? 0
     });
   }
 
@@ -445,10 +442,7 @@ p5.prototype.ws_spiral = (arg) => {
   s.angle += s.h_dir * s.h_vel;
   s.radius += s.v_dir * s.v_vel;
 
-  if (
-    (s.v_dir < 0 && s.radius <= SPIRAL_MINRAD) ||
-    (s.v_dir > 0 && s.radius >= s.diameter / 2)
-  ) {
+  if ((s.v_dir < 0 && s.radius <= SPIRAL_MINRAD) || (s.v_dir > 0 && s.radius >= s.diameter / 2)) {
     s.opa -= s.orgOpa / (s.h_vel * 100);
     if (s.opa <= 0) {
       s.radius = s.v_dir > 0 ? 0 : s.diameter / 2;
@@ -465,21 +459,21 @@ p5.prototype.ws_spiral = (arg) => {
 };
 
 /*** グリッド：敷き詰めた図形の色などが変化する ***/
-/* 引数： num, size, R, colors, opacity, interval, noise */
+/* 引数： num, size, R, cols, opacity, interval, noise */
 // num（一辺の図形数）： 個数
 // interval（色変化間隔）: 秒 （既定値： 色変化なし）
 // noise（振動の大きさ）: 数値 （規定値： 振動なし）
 // 注） size, R, opacity, interval, noiseは [最小値, 最大値] の形式で乱数
 p5.prototype.ws_grid = (arg) => {
   const num = arg.num || 5;
-  const cols = arg.colors || [
+  const cols = arg.cols || [
     color(252, 121, 121),
     color(245, 158, 66),
     color(126, 224, 201),
     color(145, 168, 235),
     color(139, 55, 191),
     color(252, 249, 179),
-    color(255, 105, 180),
+    color(255, 105, 180)
   ];
   const step = floor(width / num);
 
@@ -529,7 +523,7 @@ p5.prototype.ws_grid = (arg) => {
           col: col,
           opa: opa,
           sigma: sigma,
-          int: round(int * fps),
+          int: round(int * fps)
         });
       }
     }
@@ -577,7 +571,7 @@ p5.prototype.ws_line = (arg) => {
     color(145, 168, 235),
     color(139, 55, 191),
     color(252, 249, 179),
-    color(255, 105, 180),
+    color(255, 105, 180)
   ];
   const angle = arg.angle ?? 90;
 
@@ -614,9 +608,7 @@ p5.prototype.ws_line = (arg) => {
       const col = cols[i % cols.length];
       col.setAlpha(opa);
 
-      const range = abs(
-        floor((sin(radians(angle) + PI / 4) * width * (sqrt(2) - 1)) / 2)
-      );
+      const range = abs(floor((sin(radians(angle) + PI / 4) * width * (sqrt(2) - 1)) / 2));
 
       store.line.push({
         size: size,
@@ -625,7 +617,7 @@ p5.prototype.ws_line = (arg) => {
         y: random(-range, height + range),
         col: col,
         opa: opa,
-        vel: vel,
+        vel: vel
       });
     }
   }
